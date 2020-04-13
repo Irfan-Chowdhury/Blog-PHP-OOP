@@ -10,15 +10,11 @@
     $post     = new Post();
     // $fm = new Format(); //Already Included in "inc/header.php"
 
-    // 1st receive data by slug of Post
-    if (!isset($_GET['title']) || $_GET['title']==NULL) 
-    {
-        echo "<script>window.location='index.php';</script>";
-    }
-    else{
-        $postSlug = $_GET['title']; // can use this line or bellow the line
-        // $titleSlug = preg_replace('/[^-a-zA-Z0-9_]/', '',$_GET['slug']);
-    }
+    if (!isset($_GET['search']) || $_GET['search']==null) {
+		header("Location:index.php");
+	}else {
+		$search = $_GET['search'];
+	}
 ?>
 
 
@@ -31,22 +27,27 @@
 <!-- Left Sidebar -->
         <div class="col-md-7">
 
-<!-- ================= Get Single Post By Slug ======= -->
-<?php
-    $getPost = $post->getSinglePostBySlug($postSlug);  //Go- 'classes/Post' Mehod-8
-    if ($getPost) {
-        $data = $getPost->fetch_assoc() 
-?>
+            <!-- =========== <PHP> Get All Post ========= -->
+            <?php
+                $getPosts = $post->getArticleBySearch($search); //Goto - 'classes/Post' Method-6
+                if ($getPosts) {
+                    while ($data = $getPosts->fetch_assoc()) {
+            ?>
+
             <div class="card mb-5">
-                <img class="card-img-top" src="admin/<?php echo $data['image'] ?>" alt="Card image cap" height="300px">
+                <img class="card-img-top" src="admin/<?php echo $data['image'] ?>" alt="Card image cap" height="180px">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $data['title'] ?></h5>
-                    <p class="card-text"><?php echo $data['description'] ?></p> 
+                    <p class="card-text"><?php echo $fm->textShorten($data['description'],235) ?> <a href="singlePost.php?title=<?php echo $data['slug'] ?>" class="text-info"><strong>Continue Reading</strong></a> </p> 
                     <p class="card-text mb-0"><small class="text-muted">Category : <?php echo $data['category_name'] ?></small></p>
                     <p class="card-text"><small class="text-muted">Post Published : <?php echo date('d M, Y', strtotime($data['datetime'])) ?></small></p>
                 </div>
             </div>
-<?php } ?>
+            
+            <?php }}else {
+                   echo "<h1 class='display-4 text-danger'><strong>Sorry Data Not Found</strong></h1>" ; 
+            } ?>
+
         </div>
 
 

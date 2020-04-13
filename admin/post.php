@@ -15,6 +15,7 @@
     {
         $delPostId  = preg_replace('/[^-a-zA-Z0-9_]/', '',$_GET['delPostId']); 
         $deletePost = $post->delPostById($delPostId); // (see - 'classes/Post.php', method-5)
+        // header("Location:post.php");
     }
 ?>
 
@@ -31,8 +32,7 @@
         </div>
         
         <!-- ========= <PHP> Show Message Start ============== --> 
-            <?php //if (isset($addCategory)) { echo $addCategory;}
-                  //elseif (isset($deleteCategory)) {echo $deleteCategory; }  ?>  
+            <?php if (isset($deletePost)) { echo $deletePost;} ?>  
         <!-- ========= <PHP> Show Message End ====================== -->
 
         <!-- Table -->

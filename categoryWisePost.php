@@ -29,7 +29,7 @@
     <div class="row">
 
 <!-- Left Sidebar -->
-        <div class="col-md-8">
+        <div class="col-md-7">
 
             <!-- =========== Category Wise All Post ========= -->
             <?php
@@ -54,7 +54,7 @@
 
 <!-- Right Sidebar -->
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <?php include_once 'inc/sidebar.php'; ?>
         </div>
 

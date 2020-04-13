@@ -324,21 +324,6 @@ class Post
 
     // ==================== For BLOG SECTION ==================
 
-
-    // public function getAllBlogPost() //Method-6
-    // {
-    //     // $query  = "SELECT posts.* FROM posts LIMIT 3";
-    //     // $result = $this->db->select($query);
-    //     // return $result;
-
-    //     $query  =   "SELECT posts.*, categories.category_name 
-    //                 FROM posts
-    //                 INNER JOIN categories ON categories.id = posts.category_id";
-
-    //     $result = $this->db->select($query);
-    //     return $result;
-    // }
-
     public function getAllBlogPost($start_from, $per_page) //Method-6
     {
         $query  =   "SELECT posts.*, categories.category_name 
@@ -383,7 +368,20 @@ class Post
     }
 
 
+    // ==================== For SEARCH Optioin ==================
 
+    public function getArticleBySearch($search)
+    {
+        $query  = "SELECT posts.*, categories.category_name 
+                    FROM posts
+                    INNER JOIN categories ON categories.id = posts.category_id 
+                    WHERE title LIKE '%$search%' 
+                    OR description LIKE '%$search%' 
+                    OR categories.category_name LIKE '%$search%' ";
+                    
+        $result =  $this->db->select($query);
+        return $result;
+    }
     
 }
 

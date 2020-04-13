@@ -1,5 +1,12 @@
             
-            
+            <!-- =========== Searching Option ========= -->
+
+            <form class="form-inline my-2 my-lg-0" action="search.php" method="GET">
+                <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+                <button type="submit" class="btn btn-outline-info my-2 my-sm-0">Search</button>
+            </form>
+
+
             <!-- =========== <PHP> Get All Category ========= -->
             <h4 class="mt-5">Category</h4>
             <?php
