@@ -26,7 +26,7 @@
 <div style="min-height:530px;">
     <div class="container">
         <div class="d-flex justify-content-center mb-5">
-            <h4 class="display-4 text-bold text-secondary">Category Setup</h4>
+            <h4 class="display-4 text-bold text-secondary">Category Manage</h4>
         </div>
 
         <!-- Add New Category Button -->
@@ -90,6 +90,6 @@
 
 
 
-
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script> <!--Don't Delete-->
 <?php include_once 'inc/footer.php'; ?>
 

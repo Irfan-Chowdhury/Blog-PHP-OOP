@@ -30,6 +30,9 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="category.php">Category <span class="sr-only">(current)</span></a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="post.php">Post<span class="sr-only">(current)</span></a>
+                    </li>
                 </ul>
             </div>          
           </nav>
