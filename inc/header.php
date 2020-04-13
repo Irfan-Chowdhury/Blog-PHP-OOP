@@ -35,10 +35,14 @@
           
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-5">
-                    <li class="nav-item active">
-                        <a class="nav-link <?php if($fm->title()=='Home'){ echo 'active'; } ?>" href="index.php">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item <?php if($fm->title()=='Home'){ echo 'active'; } ?>" >
+                        <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item <?php if($fm->title()=='Blog'){ echo 'active'; } ?>" >
+                        <a class="nav-link" href="blog.php">Blog <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
+                <a href="admin/index.php" class="ml-auto btn btn-outline-warning">Go To ADMIN</a>
             </div>          
           </nav>
     </div>

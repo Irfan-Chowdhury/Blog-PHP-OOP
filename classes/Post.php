@@ -320,6 +320,34 @@ class Post
             echo "<span class='error'>Product Not Deleted..</span>";
         }
     }
+
+
+    // ==================== For BLOG SECTION ==================
+
+
+    public function getAllBlogPost() //Method-6
+    {
+        // $query  = "SELECT posts.* FROM posts LIMIT 3";
+        // $result = $this->db->select($query);
+        // return $result;
+
+        $query  =   "SELECT posts.*, categories.category_name 
+                    FROM posts
+                    INNER JOIN categories ON categories.id = posts.category_id";
+
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+
+    public function getAllLatestPost() //Method-7
+    {
+        $query  = "SELECT posts.* FROM posts ORDER BY id DESC LIMIT 5";
+        $result =  $this->db->select($query);
+        return $result;
+    }
+
+    
 }
 
 ?>

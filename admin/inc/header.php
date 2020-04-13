@@ -45,6 +45,7 @@
                         <a class="nav-link" href="post.php">Post</a>
                     </li>
                 </ul>
+                <a href="../index.php" class="ml-auto btn btn-outline-warning">Go To BLOG</a>
             </div>          
           </nav>
     </div>

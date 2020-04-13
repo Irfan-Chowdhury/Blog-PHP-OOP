@@ -103,18 +103,16 @@ class Category
     }
     
 
-    public function categoryUpdate($categoryName,$categoryId)  // Method-4
+    public function addCategory($data)  // Method-1
     {
-        $categoryName  = $this->fm->validation($categoryName); //Validation
-        $categoryId    = $this->fm->validation($categoryId); //Validation
-
+        $categoryName  = $this->fm->validation($data['category_name']); //Validation
         $category_name  = mysqli_real_escape_string($this->db->link, $categoryName); //mysqli_real_escape_string = prevent SQL Injection & This function is used to create a legal SQL string that you can use in an SQL statement. The given string is encoded to an escaped SQL string, taking into account the current character set of the connection.
-        $id             = mysqli_real_escape_string($this->db->link, $categoryId);
 
         //$slug = preg_replace(pattern, replacement, subject)
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $category_name)));
 
         if (empty($category_name)) 
+        // if ($category_name=="") 
         {
             $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
                         <strong>Error!</strong> Feild must not be empty.
@@ -126,9 +124,9 @@ class Category
             return $msg;
         }
 
-        $categoryNameQuery      = "SELECT *FROM categories WHERE category_name ='$category_name' OR slug = '$slug' LIMIT 1";
-        $categoryNameUnique     = $this->db->select($categoryNameQuery);
-        
+        $categoryNameQuery = "SELECT *FROM categories WHERE category_name ='$category_name' LIMIT 1";
+        $categoryNameUnique = $this->db->select($categoryNameQuery);
+
         if ($categoryNameUnique != false) 
         {
             $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
@@ -142,18 +140,15 @@ class Category
         }
         else 
         {
-            $query = "UPDATE categories 
-                        SET
-                        category_name ='$category_name',
-                        slug          = '$slug'
-                        WHERE     id  ='$id' ";
+            $query = "INSERT INTO  categories (category_name, slug)
+                      VALUES('$category_name', '$slug') ";
 
-            $categoryUpdate = $this->db->update($query);
+            $inserted_row = $this->db->insert($query);
 
-            if ($categoryUpdate) 
+            if ($inserted_row) 
             {
                 $msg = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-                            <strong>Success!</strong> Category Updated successfully.
+                            <strong>Success!</strong> Category Added successfully.
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                 <span aria-hidden='true'>&times;</span>
                             </button>
@@ -165,7 +160,7 @@ class Category
             }
             else 
             {
-                $msg= "<span class='error'>Category Updated Failed</span>";
+                $msg= "<span class='error'>Category Inserted Failed</span>";
                 return $msg;
             }  
         }
