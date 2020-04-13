@@ -9,6 +9,16 @@
     $category = new Category();
     $post     = new Post();
     // $fm = new Format(); //Already Included in "inc/header.php"
+
+    // 1st receive data by slug
+    if (!isset($_GET['slug']) || $_GET['slug']==NULL) 
+    {
+        echo "<script>window.location='index.php';</script>";
+    }
+    else{
+        $postSlug = $_GET['slug']; // can use this line or bellow the line
+        // $postSlug = preg_replace('/[^-a-zA-Z0-9_]/', '',$_GET['slug']);
+    }
 ?>
 
 
@@ -21,22 +31,22 @@
 <!-- Left Sidebar -->
         <div class="col-md-8">
 
-            <!-- =========== <PHP> Get All Post ========= -->
-            <?php
-                $getPosts = $post->getAllBlogPost(); //Goto - 'classes/Post' Method-6
-                if ($getPosts) {
-                    while ($data = $getPosts->fetch_assoc()) {
-            ?>
+<!-- ================= Get Single Post By Slug ======= -->
+<?php
+    $getPost = $post->getSinglePostBySlug($postSlug);  //Go- 'classes/Post' Mehod-
+    if ($getPost) {
+        $data = $getPost->fetch_assoc() 
+?>
             <div class="card mb-5">
-                <img class="card-img-top" src="admin/<?php echo $data['image'] ?>" alt="Card image cap" height="180px">
+                <img class="card-img-top" src="admin/<?php echo $data['image'] ?>" alt="Card image cap" height="300px">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $data['title'] ?></h5>
-                    <p class="card-text"><?php echo $fm->textShorten($data['description'],235) ?> <a href="singlePost.php?slug=<?php echo $data['slug'] ?>" class="text-info"><strong>Continue Reading</strong></a> </p> 
+                    <p class="card-text"><?php echo $data['description'] ?></p> 
                     <p class="card-text mb-0"><small class="text-muted">Category : <?php echo $data['category_name'] ?></small></p>
                     <p class="card-text"><small class="text-muted">Post Published : <?php echo date('d M, Y', strtotime($data['datetime'])) ?></small></p>
                 </div>
             </div>
-            <?php }} ?>
+<?php } ?>
         </div>
 
 

@@ -347,6 +347,20 @@ class Post
         return $result;
     }
 
+
+    public function getSinglePostBySlug($slug) //Method-7
+    {
+        $query  = "SELECT posts.*, categories.category_name 
+                    FROM posts
+                    INNER JOIN categories ON categories.id = posts.category_id 
+                    WHERE slug = '$slug' ";
+
+        $result =  $this->db->select($query);
+        return $result;
+    }
+
+
+
     
 }
 

@@ -53,7 +53,7 @@
                         <div class="form-group">
                             <label><strong>Category</strong></label>
                             <select name="category_id" class=form-control required>
-                                <option value="">--- Select Category ---</option>
+                                <option  value="">--- Select Category ---</option>
                             <!-- ================= Get All Category Start ======= -->
                             <?php 
                                 $getCategory = $category->getAllCategory(); //goto- 'classes/Category.php' Method-2
