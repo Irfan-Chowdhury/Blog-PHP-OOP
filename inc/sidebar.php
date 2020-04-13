@@ -7,7 +7,7 @@
                 if ($getCategories) {
                     while ($data = $getCategories->fetch_assoc()) {
             ?>
-                <p><a href="#" class="text-dark"><?php echo $data['category_name'] ?></a></p>
+                <p><a href="categoryWisePost.php?category=<?php echo $data['slug'] ?>" class="text-secondary"><?php echo $data['category_name'] ?></a></p>
             <?php }} ?>
 
 
@@ -19,5 +19,5 @@
                 if ($getPosts) {
                     while ($data = $getPosts->fetch_assoc()) {
             ?>
-                <p><a href="singlePost.php?slug=<?php echo $data['slug'] ?>" class="text-info"><?php echo $data['title'] ?></a></p>
+                <p><a href="singlePost.php?title=<?php echo $data['slug'] ?>" class="text-info"><?php echo $data['title'] ?></a></p>
             <?php }} ?>

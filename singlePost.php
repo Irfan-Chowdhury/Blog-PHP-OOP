@@ -10,14 +10,14 @@
     $post     = new Post();
     // $fm = new Format(); //Already Included in "inc/header.php"
 
-    // 1st receive data by slug
-    if (!isset($_GET['slug']) || $_GET['slug']==NULL) 
+    // 1st receive data by slug of Post
+    if (!isset($_GET['title']) || $_GET['title']==NULL) 
     {
         echo "<script>window.location='index.php';</script>";
     }
     else{
-        $postSlug = $_GET['slug']; // can use this line or bellow the line
-        // $postSlug = preg_replace('/[^-a-zA-Z0-9_]/', '',$_GET['slug']);
+        $postSlug = $_GET['title']; // can use this line or bellow the line
+        // $titleSlug = preg_replace('/[^-a-zA-Z0-9_]/', '',$_GET['slug']);
     }
 ?>
 
@@ -33,7 +33,7 @@
 
 <!-- ================= Get Single Post By Slug ======= -->
 <?php
-    $getPost = $post->getSinglePostBySlug($postSlug);  //Go- 'classes/Post' Mehod-
+    $getPost = $post->getSinglePostBySlug($postSlug);  //Go- 'classes/Post' Mehod-8
     if ($getPost) {
         $data = $getPost->fetch_assoc() 
 ?>

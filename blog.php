@@ -31,7 +31,7 @@
                 <img class="card-img-top" src="admin/<?php echo $data['image'] ?>" alt="Card image cap" height="180px">
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $data['title'] ?></h5>
-                    <p class="card-text"><?php echo $fm->textShorten($data['description'],235) ?> <a href="singlePost.php?slug=<?php echo $data['slug'] ?>" class="text-info"><strong>Continue Reading</strong></a> </p> 
+                    <p class="card-text"><?php echo $fm->textShorten($data['description'],235) ?> <a href="singlePost.php?title=<?php echo $data['slug'] ?>" class="text-info"><strong>Continue Reading</strong></a> </p> 
                     <p class="card-text mb-0"><small class="text-muted">Category : <?php echo $data['category_name'] ?></small></p>
                     <p class="card-text"><small class="text-muted">Post Published : <?php echo date('d M, Y', strtotime($data['datetime'])) ?></small></p>
                 </div>

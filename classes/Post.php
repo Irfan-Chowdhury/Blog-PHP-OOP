@@ -348,12 +348,24 @@ class Post
     }
 
 
-    public function getSinglePostBySlug($slug) //Method-7
+    public function getSinglePostBySlug($slug) //Method-8
     {
         $query  = "SELECT posts.*, categories.category_name 
                     FROM posts
                     INNER JOIN categories ON categories.id = posts.category_id 
-                    WHERE slug = '$slug' ";
+                    WHERE posts.slug = '$slug' ";
+
+        $result =  $this->db->select($query);
+        return $result;
+    }
+
+
+    public function getCategoryWisePostsBySlug($slug) //Method-9
+    {
+        $query  = "SELECT posts.*, categories.category_name 
+                    FROM posts
+                    INNER JOIN categories ON categories.id = posts.category_id 
+                    WHERE categories.slug = '$slug' ";
 
         $result =  $this->db->select($query);
         return $result;
