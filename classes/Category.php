@@ -92,110 +92,110 @@ class Category
         return $result;
     }
 
-        // ******************** Category Edit *************************
+    // ******************** Category Edit *************************
 
 
-        public function getCategoryById($categoryId)  // --->> Method-3 
+    public function getCategoryById($categoryId)  // --->> Method-3 
+    {
+        $query  = "SELECT *FROM categories WHERE id='$categoryId' ";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    
+
+    public function categoryUpdate($categoryName,$categoryId)  // Method-4
+    {
+        $categoryName  = $this->fm->validation($categoryName); //Validation
+        $categoryId    = $this->fm->validation($categoryId); //Validation
+
+        $category_name  = mysqli_real_escape_string($this->db->link, $categoryName); //mysqli_real_escape_string = prevent SQL Injection & This function is used to create a legal SQL string that you can use in an SQL statement. The given string is encoded to an escaped SQL string, taking into account the current character set of the connection.
+        $id             = mysqli_real_escape_string($this->db->link, $categoryId);
+
+        //$slug = preg_replace(pattern, replacement, subject)
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $category_name)));
+
+        if (empty($category_name)) 
         {
-            $query  = "SELECT *FROM categories WHERE id='$categoryId' ";
-            $result = $this->db->select($query);
-            return $result;
+            $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                        <strong>Error!</strong> Feild must not be empty.
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>" ;
+
+            return $msg;
         }
-    
 
-        public function categoryUpdate($categoryName,$categoryId)  // Method-4
+        $categoryNameQuery      = "SELECT *FROM categories WHERE category_name ='$category_name' OR slug = '$slug' LIMIT 1";
+        $categoryNameUnique     = $this->db->select($categoryNameQuery);
+        
+        if ($categoryNameUnique != false) 
         {
-            $categoryName  = $this->fm->validation($categoryName); //Validation
-            $categoryId    = $this->fm->validation($categoryId); //Validation
-    
-            $category_name  = mysqli_real_escape_string($this->db->link, $categoryName); //mysqli_real_escape_string = prevent SQL Injection & This function is used to create a legal SQL string that you can use in an SQL statement. The given string is encoded to an escaped SQL string, taking into account the current character set of the connection.
-            $id             = mysqli_real_escape_string($this->db->link, $categoryId);
-    
-            //$slug = preg_replace(pattern, replacement, subject)
-            $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $category_name)));
-    
-            if (empty($category_name)) 
-            {
-                $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                            <strong>Error!</strong> Feild must not be empty.
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>" ;
-    
-                return $msg;
-            }
-    
-            $categoryNameQuery      = "SELECT *FROM categories WHERE category_name ='$category_name' OR slug = '$slug' LIMIT 1";
-            $categoryNameUnique     = $this->db->select($categoryNameQuery);
-            
-            if ($categoryNameUnique != false) 
-            {
-                $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
-                            <strong>Error!</strong> Category already exists !!!
-                            <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                <span aria-hidden='true'>&times;</span>
-                            </button>
-                        </div>" ;
-    
-                return $msg;
-            }
-            else 
-            {
-                $query = "UPDATE categories 
-                            SET
-                            category_name ='$category_name',
-                            slug          = '$slug'
-                            WHERE     id  ='$id' ";
-    
-                $categoryUpdate = $this->db->update($query);
-    
-                if ($categoryUpdate) 
-                {
-                    $msg = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-                                <strong>Success!</strong> Category Updated successfully.
-                                <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-                                    <span aria-hidden='true'>&times;</span>
-                                </button>
-                            </div>" ;
-    
-                    return $msg;
-    
-                    //header("Location:category.php");
-                }
-                else 
-                {
-                    $msg= "<span class='error'>Category Updated Failed</span>";
-                    return $msg;
-                }  
-            }
+            $msg = "<div class='alert alert-danger alert-dismissible fade show' role='alert'>
+                        <strong>Error!</strong> Category already exists !!!
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>" ;
+
+            return $msg;
         }
-    
-
-        // ******************** Category Delete *************************
-
-        public function delCategoryById($delCategoryId) //--->> Method-5
+        else 
         {
-            $query="DELETE FROM categories WHERE id='$delCategoryId' ";
+            $query = "UPDATE categories 
+                        SET
+                        category_name ='$category_name',
+                        slug          = '$slug'
+                        WHERE     id  ='$id' ";
 
-            $categoryDelete= $this->db->delete($query);
+            $categoryUpdate = $this->db->update($query);
 
-            if($categoryDelete)
+            if ($categoryUpdate) 
             {
                 $msg = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
-                            <strong>Success!</strong> Category Deleted successfully.
+                            <strong>Success!</strong> Category Updated successfully.
                             <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
                                 <span aria-hidden='true'>&times;</span>
                             </button>
                         </div>" ;
 
                 return $msg;
+
+                //header("Location:category.php");
             }
             else 
             {
-                echo "<span class='error'>Category Not Deleted..</span>";
-            }
+                $msg= "<span class='error'>Category Updated Failed</span>";
+                return $msg;
+            }  
         }
+    }
+
+
+    // ******************** Category Delete *************************
+
+    public function delCategoryById($delCategoryId) //--->> Method-5
+    {
+        $query="DELETE FROM categories WHERE id='$delCategoryId' ";
+
+        $categoryDelete= $this->db->delete($query);
+
+        if($categoryDelete)
+        {
+            $msg = "<div class='alert alert-success alert-dismissible fade show' role='alert'>
+                        <strong>Success!</strong> Category Deleted successfully.
+                        <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                        </button>
+                    </div>" ;
+
+            return $msg;
+        }
+        else 
+        {
+            echo "<span class='error'>Category Not Deleted..</span>";
+        }
+    }
 
 }
 

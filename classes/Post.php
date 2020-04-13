@@ -19,7 +19,7 @@ class Post
 
     public function addPost($data,$file)  // Method-1
     {
-        $categoryId       = $this->fm->validation($data['category_id']);
+        $categoryId = $this->fm->validation($data['category_id']);
         $post_title       = $this->fm->validation($data['title']);
         $post_description = $this->fm->validation($data['description']);
         

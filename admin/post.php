@@ -2,10 +2,10 @@
     include_once 'inc/header.php'; 
 
     // spl_autoload_register(function($class){
-    //     include_once "classes/".$class.".php";
+    //     include_once "../classes/".$class.".php";
     // });
-    include_once 'classes/Post.php'; //We Can Use this instesad of spl_autoload_register
-    //include_once 'helpers/Format.php'; //No Need this line because we already declare it 'Post' class
+    include_once '../classes/Post.php'; //We Can Use this instesad of spl_autoload_register
+    //include_once '../helpers/Format.php'; //No Need this line because we already declare it 'Post' class
 
     $post     = new Post();
     $fm	      = new Format();
